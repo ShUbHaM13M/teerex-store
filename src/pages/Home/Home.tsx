@@ -21,11 +21,7 @@ export default function HomePage() {
         <Sidebar showFilters={showFitlers} onCloseClick={toggleShowFilter} />
         <section className="product-container">
           {products.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              onAddCartClick={() => {}}
-            />
+            <ProductCard key={product.id} product={product} />
           ))}
         </section>
       </div>

@@ -1,4 +1,10 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 export type Product = {
   id: number;
@@ -16,8 +22,14 @@ const API_URL =
   import.meta.env.API_URL ||
   "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/catalogue.json";
 
-export const StoreContext = createContext<{ products: Product[] }>({
+interface StoreContextProps {
+  products: Product[];
+  getProductById: (product_id: number) => void;
+}
+
+export const StoreContext = createContext<StoreContextProps>({
   products: [],
+  getProductById: () => {},
 });
 
 export function useStore() {
@@ -37,11 +49,18 @@ export default function StoreProvider({
 }) {
   const [products, setProducts] = useState<Product[]>([]);
 
+  const getProductById = useCallback(
+    (product_id: number) =>
+      products.find((product) => product.id === product_id),
+    [products]
+  );
+
   useEffect(() => {
     getProducts().then((data) => setProducts(data));
   }, []);
 
-  const value = { products };
+  const value = { products, getProductById };
+
   return (
     <StoreContext.Provider value={value}>{children}</StoreContext.Provider>
   );

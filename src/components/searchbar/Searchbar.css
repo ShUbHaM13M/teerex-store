@@ -10,7 +10,7 @@
   display: block;
   padding: 0.5em 0.7em 0.5em 1em;
   width: 100%;
-  border: 2px solid rgba(0, 0, 0, 0.1);
+  border: 2px solid var(--static-1);
   border-radius: 10px;
   max-width: calc(100% - 2em);
 }
@@ -25,7 +25,7 @@
   place-items: center;
   cursor: pointer;
   padding: 0.4em 0.8em;
-  border: 2px solid rgba(0, 0, 0, 0.1);
+  border: 2px solid var(--static-1);
   border-radius: 6px;
   stroke: var(--text);
   transition: all 0.3s ease;

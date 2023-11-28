@@ -13,6 +13,8 @@
     --primary: #3038cf;
     --secondary: #f2f0ca;
     --accent: #2e35c2;
+    --static-1: rgba(0, 0, 0, 0.1);
+    --static-3: rgba(0, 0, 0, 0.03);
   }
 }
 @media (prefers-color-scheme: dark) {
@@ -22,6 +24,8 @@
     --primary: #3038cf;
     --secondary: #35330d;
     --accent: #3d44d1;
+    --static-1: rgba(255, 255, 255, 0.1);
+    --static-3: rgba(255, 255, 255, 0.03);
   }
 }
 

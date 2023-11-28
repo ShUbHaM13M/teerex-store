@@ -3,7 +3,8 @@ import { Cart } from "..";
 import { Link, useLocation } from "wouter";
 
 const Navbar = () => {
-  const [location, setLocation] = useLocation();
+  const [location] = useLocation();
+
   return (
     <header>
       <nav>
@@ -17,12 +18,7 @@ const Navbar = () => {
           >
             Products
           </Link>
-          <button
-            onClick={() => setLocation("/cart")}
-            className="nav-link cart-button"
-          >
-            <Cart />
-          </button>
+          <Cart />
         </div>
       </nav>
     </header>

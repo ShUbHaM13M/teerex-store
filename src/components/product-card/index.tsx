@@ -1,9 +1,9 @@
+import { AddToCartBtn } from "..";
 import { Product } from "../../context/StoreContext";
 import "./ProductCard.css";
 
 interface ProductCardProps {
   product: Product;
-  onAddCartClick: () => void;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
@@ -13,14 +13,12 @@ export default function ProductCard({ product }: ProductCardProps) {
         className="product-image"
         src={product.imageURL}
         alt={product.name}
-        title={product.imageURL}
+        title={product.name}
       />
       <p className="product-title">{product.name}</p>
       <div className="action">
         <span className="price">Rs {product.price}</span>
-        <button className="cart-btn" type="button" title="Add to cart">
-          Add to cart
-        </button>
+        <AddToCartBtn product={product} />
       </div>
     </div>
   );

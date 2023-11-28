@@ -14,12 +14,20 @@
 }
 
 .product-image {
+  background-color: white;
   height: 100%;
   width: 100%;
   border-radius: 6px;
-  aspect-ratio: 1/1;
-  object-fit: cover;
+  aspect-ratio: 2/1;
+  object-fit: scale-down;
 }
+
+@media screen and (min-width: 767px) {
+  .product-image {
+    aspect-ratio: 1/1;
+  }
+}
+
 .product-title {
   font-size: 1.3rem;
   margin-top: 1em;
@@ -32,16 +40,4 @@
 }
 .price {
   font-weight: 600;
-}
-.cart-btn {
-  background-color: var(--primary);
-  padding: 0.5em 1em;
-  color: var(--background);
-  border-radius: 6px;
-  cursor: pointer;
-  transition: filter 0.3s ease;
-}
-.cart-btn:hover,
-.cart-btn:focus {
-  filter: brightness(80%);
 }

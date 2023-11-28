@@ -3,7 +3,7 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid var(--static-1);
 }
 
 nav h1 {
@@ -62,8 +62,4 @@ nav h1 {
   .product-link {
     display: initial;
   }
-}
-
-.cart-button {
-  cursor: pointer;
 }

@@ -28,7 +28,7 @@ export default function Sidebar({ showFilters, onCloseClick }: SidebarProps) {
           <p className="filter-title">{label}</p>
           <div className="filter-options">
             {options.map((option) => (
-              <div className="filter">
+              <div key={option} className="filter">
                 <input
                   type="checkbox"
                   name={option}

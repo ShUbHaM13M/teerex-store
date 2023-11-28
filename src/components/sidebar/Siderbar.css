@@ -16,8 +16,9 @@
   align-items: center;
 }
 .sidebar .close-button {
+  cursor: pointer;
   padding: 0.2em;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: var(--static-1);
   display: grid;
   place-items: center;
   border-radius: 1em;
@@ -38,7 +39,7 @@
 
 .sidebar hr {
   margin-block: 0.5em;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: var(--static-1);
   border: none;
   height: 1px;
 }
@@ -50,7 +51,7 @@
 @media screen and (min-width: 767px) {
   .sidebar {
     position: initial;
-    background-color: rgba(0, 0, 0, 0.03);
+    background-color: var(--static-3);
     transform: translateX(0);
     justify-content: initial;
     width: 20%;
