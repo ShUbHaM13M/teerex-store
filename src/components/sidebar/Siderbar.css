@@ -1,0 +1,93 @@
+.sidebar {
+  position: fixed;
+  inset: 0;
+  padding: 1em;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background);
+  justify-content: center;
+  transform: translateX(-100%);
+}
+
+.sidebar .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.sidebar .close-button {
+  padding: 0.2em;
+  background-color: rgba(0, 0, 0, 0.1);
+  display: grid;
+  place-items: center;
+  border-radius: 1em;
+}
+.sidebar .close-button path {
+  fill: var(--text);
+}
+
+@media screen and (min-width: 767px) {
+  .sidebar .close-button {
+    display: none;
+  }
+}
+
+.sidebar h2 {
+  font-size: 1.3rem;
+}
+
+.sidebar hr {
+  margin-block: 0.5em;
+  background-color: rgba(0, 0, 0, 0.1);
+  border: none;
+  height: 1px;
+}
+
+.sidebar.active {
+  transform: translateX(0);
+}
+
+@media screen and (min-width: 767px) {
+  .sidebar {
+    position: initial;
+    background-color: rgba(0, 0, 0, 0.03);
+    transform: translateX(0);
+    justify-content: initial;
+    width: 20%;
+    height: fit-content;
+  }
+}
+
+.filter-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+  margin-block: 0.5em;
+}
+
+.filter-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.filter-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+}
+
+.filter {
+  display: flex;
+  gap: 1em;
+  background-color: transparent;
+}
+
+body:has(.sidebar.active) {
+  overflow: hidden;
+}
+
+@media screen and (min-width: 767px) {
+  body:has(.sidebar.active) {
+    overflow: auto;
+  }
+}

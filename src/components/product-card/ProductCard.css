@@ -4,8 +4,15 @@
   padding: 1rem;
   border-radius: 10px;
   background-color: var(--secondary);
-  max-width: var(--card-width);
+  width: 100%;
 }
+
+@media screen and (min-width: 767px) {
+  .card-container {
+    max-width: var(--card-width);
+  }
+}
+
 .product-image {
   height: 100%;
   width: 100%;
