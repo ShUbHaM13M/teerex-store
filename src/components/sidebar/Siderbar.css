@@ -8,6 +8,12 @@
   background-color: var(--background);
   justify-content: center;
   transform: translateX(-100%);
+  align-items: center;
+}
+
+.sidebar-wrapper {
+  width: 100%;
+  max-width: 500px;
 }
 
 .sidebar .header {
@@ -27,7 +33,7 @@
   fill: var(--text);
 }
 
-@media screen and (min-width: 767px) {
+@media screen and (min-width: 1024px) {
   .sidebar .close-button {
     display: none;
   }
@@ -48,13 +54,13 @@
   transform: translateX(0);
 }
 
-@media screen and (min-width: 767px) {
+@media screen and (min-width: 1024px) {
   .sidebar {
     position: initial;
     background-color: var(--static-3);
     transform: translateX(0);
     justify-content: initial;
-    width: 20%;
+    min-width: 20%;
     height: fit-content;
   }
 }

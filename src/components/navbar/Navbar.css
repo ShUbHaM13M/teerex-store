@@ -29,19 +29,19 @@ nav h1 {
   text-decoration: none;
   font-size: 1rem;
   color: inherit;
-  transition: opacity 0.3 ease;
+  transition: opacity 0.3s ease;
   padding-inline: 1rem;
   position: relative;
 }
-.nav-link::after {
+.nav-link.active::after {
   content: "";
   position: absolute;
-  width: 0;
+  width: 0px;
   height: 2px;
   left: 0;
   bottom: -20%;
   background-color: var(--accent);
-  transition: width 0.3 ease;
+  transition: width 0.3s ease;
   border-radius: 4px;
 }
 
