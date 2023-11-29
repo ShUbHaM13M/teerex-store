@@ -71,8 +71,6 @@ export default function UserProvider({ children }: UserProviderProps) {
     });
   }, []);
 
-  console.log(productsInCart);
-
   const deleteProductFromCart = useCallback((product_id: number) => {
     setProductsInCart((prev) => {
       if (!prev[product_id]) return prev;

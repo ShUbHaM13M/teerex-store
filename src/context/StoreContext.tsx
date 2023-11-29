@@ -16,6 +16,12 @@ export type Product = {
   color: string;
   gender: string;
   quantity: number;
+  [key: string]: string | number;
+};
+
+type Filter = {
+  type: keyof Product;
+  value: string | number;
 };
 
 const API_URL =
@@ -24,12 +30,18 @@ const API_URL =
 
 interface StoreContextProps {
   products: Product[];
-  getProductById: (product_id: number) => void;
+  filterProductsBySearch: (query: string) => void;
+  updateFilters: (
+    attribute: string,
+    value: string,
+    action: "add" | "remove"
+  ) => void;
 }
 
 export const StoreContext = createContext<StoreContextProps>({
   products: [],
-  getProductById: () => {},
+  filterProductsBySearch: () => {},
+  updateFilters: () => {},
 });
 
 export function useStore() {
@@ -48,18 +60,87 @@ export default function StoreProvider({
   children: React.ReactNode;
 }) {
   const [products, setProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [filters, setFilters] = useState<Filter[]>([]);
 
-  const getProductById = useCallback(
-    (product_id: number) =>
-      products.find((product) => product.id === product_id),
+  const filterProductsBySearch = useCallback(
+    (query: string) => {
+      if (!query.length) {
+        setFilteredProducts(products);
+        return;
+      }
+
+      const tokens = query
+        .trim()
+        .split(" ")
+        .map((token) => token.toLowerCase());
+
+      setFilteredProducts(() => {
+        if (tokens.length > 1) {
+          return products.filter((product) => {
+            if (
+              query.toLowerCase() === product.name.toLowerCase() ||
+              (tokens.includes(product.color.toLowerCase()) &&
+                tokens.includes(product.type.toLowerCase()))
+            )
+              return true;
+            return false;
+          });
+        }
+        return products.filter((product) => {
+          if (
+            tokens.includes(product.color.toLowerCase()) ||
+            tokens.includes(product.type.toLowerCase())
+          )
+            return true;
+        });
+      });
+    },
     [products]
   );
 
+  const updateFilters = useCallback(
+    (attribute: string, value: string, action: "add" | "remove") => {
+      setFilters((prev) => {
+        if (action === "add") return [...prev, { type: attribute, value }];
+        if (action === "remove")
+          return prev.filter((filter) => filter.value !== value);
+        return prev;
+      });
+    },
+    []
+  );
+
   useEffect(() => {
-    getProducts().then((data) => setProducts(data));
+    getProducts().then((data) => {
+      setProducts(data);
+      setFilteredProducts(data);
+    });
   }, []);
 
-  const value = { products, getProductById };
+  useEffect(() => {
+    if (!filters.length) {
+      setFilteredProducts(products);
+      return;
+    }
+
+    // TODO: Fix filtering not working
+    const filtered = products.filter((product) => {
+      console.log(filters);
+      for (const filter of filters) {
+        const value = product[filter.type];
+        if (typeof value === "string")
+          return value.toLowerCase() === filter.value;
+      }
+    });
+    setFilteredProducts(filtered);
+  }, [filters, products]);
+
+  const value = {
+    products: filteredProducts,
+    filterProductsBySearch,
+    updateFilters,
+  };
 
   return (
     <StoreContext.Provider value={value}>{children}</StoreContext.Provider>

@@ -7,7 +7,7 @@ type FilterType = {
 
 export const filters: FilterType[] = [
     {
-        label: "Colour",
+        label: "Color",
         options: ["Red", "Blue", "Green"],
     },
     {

@@ -1,4 +1,7 @@
 import "./Searchbar.css";
+import useDebouce from "../../hooks/useDebounce";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import { useStore } from "../../context/StoreContext";
 
 interface SearchbarProps {
   showFilters: boolean;
@@ -9,14 +12,32 @@ export default function Searchbar({
   onShowFitersButtonClick,
   showFilters,
 }: SearchbarProps) {
+  const [query, setQuery] = useState("");
+  const debouncedQuery = useDebouce(query);
+
+  const { filterProductsBySearch } = useStore();
+
+  const onSearchInputChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      setQuery(event.currentTarget.value);
+    },
+    []
+  );
+
+  useEffect(() => {
+    filterProductsBySearch(debouncedQuery);
+  }, [debouncedQuery]);
+
   return (
     <div className="input-container">
       <input
+        value={query}
+        onChange={onSearchInputChange}
         type="search"
         name="search"
         id="search"
         className="searchbar"
-        placeholder="Search products, colour, type..."
+        placeholder="Search name, colour, type..."
       />
       <button
         className={`filter-button ${showFilters ? "active" : ""}`}
