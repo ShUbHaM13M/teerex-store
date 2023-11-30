@@ -43,3 +43,37 @@ button {
 ::selection {
   background-color: rgba(0, 0, 0, 0.3);
 }
+
+main {
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+}
+
+.container.col {
+  flex-direction: column;
+}
+
+@media screen and (min-width: 1024px) {
+  .container {
+    max-width: 1980px;
+    padding-inline: 2em;
+  }
+}
+
+hr {
+  margin-block: 0.5em;
+  background-color: var(--static-1);
+  border: none;
+  height: 1px;
+}

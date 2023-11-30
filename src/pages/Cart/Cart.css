@@ -1,0 +1,34 @@
+.container.cart {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  max-width: 1000px;
+  border-radius: 10px;
+  height: 100%;
+}
+
+.container.cart .header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+@media screen and (min-width: 767px) {
+  .header {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+.cart-item-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.item-count {
+  font-size: 1.1rem;
+}
+
+.total-amount {
+  font-size: 1.3rem;
+  font-weight: 600;
+}

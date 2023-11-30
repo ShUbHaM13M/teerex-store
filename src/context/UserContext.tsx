@@ -12,6 +12,7 @@ type UserContextProps = {
   deleteProductFromCart: (product_id: number) => void;
   getTotalItemsInCart: () => number;
   getProductQuantity: (product_id: number) => number;
+  getTotalAmount: () => number;
 };
 
 export const UserContext = createContext<UserContextProps>({
@@ -21,6 +22,7 @@ export const UserContext = createContext<UserContextProps>({
   deleteProductFromCart: () => {},
   getTotalItemsInCart: () => 0,
   getProductQuantity: () => 0,
+  getTotalAmount: () => 0,
 });
 
 export function useUserData() {
@@ -75,12 +77,19 @@ export default function UserProvider({ children }: UserProviderProps) {
     setProductsInCart((prev) => {
       if (!prev[product_id]) return prev;
       delete prev[product_id];
-      return prev;
+      return { ...prev };
     });
   }, []);
 
   const getProductQuantity = (product_id: number) =>
     productsInCart[product_id] ? productsInCart[product_id].quantity : 0;
+
+  function getTotalAmount() {
+    return Object.values(productsInCart).reduce(
+      (amount, product) => amount + product.quantity * product.price,
+      0
+    );
+  }
 
   const value = {
     cart: productsInCart,
@@ -89,6 +98,7 @@ export default function UserProvider({ children }: UserProviderProps) {
     getProductQuantity,
     removeProductFromCart,
     deleteProductFromCart,
+    getTotalAmount,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

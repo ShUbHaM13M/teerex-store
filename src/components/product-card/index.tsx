@@ -17,7 +17,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       />
       <p className="product-title">{product.name}</p>
       <div className="action">
-        <span className="price">Rs {product.price}</span>
+        <span className="price">₹ {product.price}</span>
         <AddToCartBtn product={product} />
       </div>
     </div>

@@ -21,7 +21,7 @@ export type Product = {
 
 type Filter = {
   type: keyof Product;
-  value: string | number;
+  value: string;
 };
 
 const API_URL =
@@ -124,14 +124,18 @@ export default function StoreProvider({
       return;
     }
 
-    // TODO: Fix filtering not working
     const filtered = products.filter((product) => {
-      console.log(filters);
       for (const filter of filters) {
         const value = product[filter.type];
-        if (typeof value === "string")
-          return value.toLowerCase() === filter.value;
+        if (filter.type === "price") {
+          console.log(parseInt(filter.value));
+        } else if (
+          typeof value === "string" &&
+          value.toLowerCase() === filter.value
+        )
+          return true;
       }
+      return false;
     });
     setFilteredProducts(filtered);
   }, [filters, products]);

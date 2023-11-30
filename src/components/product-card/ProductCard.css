@@ -5,6 +5,13 @@
   border-radius: 10px;
   background-color: var(--secondary);
   width: 100%;
+  overflow: hidden;
+}
+
+@media screen and (min-width: 767px) {
+  .card-container {
+    max-width: 300px;
+  }
 }
 
 .product-image {

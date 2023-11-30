@@ -1,6 +1,11 @@
 import "./Searchbar.css";
-import useDebouce from "../../hooks/useDebounce";
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  KeyboardEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { useStore } from "../../context/StoreContext";
 
 interface SearchbarProps {
@@ -13,7 +18,7 @@ export default function Searchbar({
   showFilters,
 }: SearchbarProps) {
   const [query, setQuery] = useState("");
-  const debouncedQuery = useDebouce(query);
+  // const debouncedQuery = useDebouce(query);
 
   const { filterProductsBySearch } = useStore();
 
@@ -24,15 +29,20 @@ export default function Searchbar({
     []
   );
 
+  const onSearchInputEnter = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") filterProductsBySearch(query);
+  };
+
   useEffect(() => {
-    filterProductsBySearch(debouncedQuery);
-  }, [debouncedQuery]);
+    if (!query.length) filterProductsBySearch(query);
+  }, [query]);
 
   return (
     <div className="input-container">
       <input
         value={query}
         onChange={onSearchInputChange}
+        onKeyDown={onSearchInputEnter}
         type="search"
         name="search"
         id="search"

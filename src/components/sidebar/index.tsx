@@ -1,7 +1,6 @@
-import { ChangeEvent, useCallback } from "react";
 import "./Siderbar.css";
 import { filters } from "./filterTypes";
-import { useStore } from "../../context/StoreContext";
+import { Filter } from "..";
 
 interface SidebarProps {
   showFilters: boolean;
@@ -9,22 +8,6 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ showFilters, onCloseClick }: SidebarProps) {
-  const { updateFilters } = useStore();
-
-  const onCheckboxValueChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const target = e.currentTarget;
-      const attribute = target.getAttribute("data-attribute");
-      if (attribute)
-        updateFilters(
-          attribute.toLowerCase(),
-          target.value.toLowerCase(),
-          target.checked ? "add" : "remove"
-        );
-    },
-    []
-  );
-
   return (
     <section className={`sidebar ${showFilters ? "active" : ""}`}>
       <div className="sidebar-wrapper">
@@ -42,26 +25,7 @@ export default function Sidebar({ showFilters, onCloseClick }: SidebarProps) {
           </button>
         </div>
         <hr />
-        {filters.map(({ label, options }) => (
-          <div className="filter-container" key={label}>
-            <p className="filter-title">{label}</p>
-            <div className="filter-options">
-              {options.map((option) => (
-                <div key={option} className="filter">
-                  <input
-                    data-attribute={label}
-                    type="checkbox"
-                    name={option}
-                    id={option}
-                    value={option}
-                    onChange={onCheckboxValueChange}
-                  />
-                  <label htmlFor={option}>{option}</label>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
+        <Filter filters={filters} />
       </div>
     </section>
   );

@@ -4,5 +4,7 @@ import ProductCard from "./product-card";
 import Searchbar from "./searchbar";
 import Sidebar from "./sidebar";
 import AddToCartBtn from "./add-to-cart-btn";
+import CartItem from "./cart-item";
+import Filter from "./filter";
 
-export { Navbar, Cart, ProductCard, Searchbar, Sidebar, AddToCartBtn }
+export { Navbar, Cart, ProductCard, Searchbar, Sidebar, AddToCartBtn, CartItem, Filter }

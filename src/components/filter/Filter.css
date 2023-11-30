@@ -1,0 +1,52 @@
+.filter-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+  margin-block: 0.5em;
+}
+
+.filter-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.filter-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+}
+.filter-options.row {
+  max-width: 100%;
+  gap: 0.5em;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.filter {
+  display: flex;
+  gap: 1em;
+  background-color: transparent;
+}
+
+.color-filter-btn {
+  --size: 28px;
+  height: var(--size);
+  width: var(--size);
+  border-radius: 4px;
+  cursor: pointer;
+  outline: 1px solid transparent;
+  transition: transform, outline;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+}
+
+.color-filter-btn:has(input:checked) {
+  outline: 1px solid rgba(0, 0, 0, 0.4);
+  transform: scale(0.9);
+}
+
+@media (prefers-color-scheme: dark) {
+  .color-filter-btn:has(input:checked) {
+    outline-color: rgba(255, 255, 255);
+  }
+}
