@@ -20,8 +20,7 @@ export type Product = {
 };
 
 type Filter = {
-  type: keyof Product;
-  value: string;
+  [key: string]: Set<string>;
 };
 
 const API_URL =
@@ -31,6 +30,7 @@ const API_URL =
 interface StoreContextProps {
   products: Product[];
   filterProductsBySearch: (query: string) => void;
+  getProductById: (product_id: number) => Product | undefined;
   updateFilters: (
     attribute: string,
     value: string,
@@ -41,6 +41,7 @@ interface StoreContextProps {
 export const StoreContext = createContext<StoreContextProps>({
   products: [],
   filterProductsBySearch: () => {},
+  getProductById: () => undefined,
   updateFilters: () => {},
 });
 
@@ -54,6 +55,48 @@ async function getProducts(): Promise<Product[]> {
   return data as Product[];
 }
 
+function getFilteredProducts(products: Product[], filters: Filter) {
+  return products.filter((product) => {
+    let match = true;
+    Object.entries(filters).forEach(([type, value]) => {
+      match =
+        match &&
+        [...value].reduce((acc, v) => {
+          const current = product[type];
+          if (typeof current === "string")
+            return acc || current.toLowerCase() === v;
+          return acc;
+        }, false);
+    });
+    return match;
+  });
+}
+
+function checkProductMatchQuery(
+  query: string,
+  tokens: string[],
+  products: Product[]
+) {
+  if (tokens.length > 1) {
+    return products.filter((product) => {
+      if (
+        query.toLowerCase() === product.name.toLowerCase() ||
+        (tokens.includes(product.color.toLowerCase()) &&
+          tokens.includes(product.type.toLowerCase()))
+      )
+        return true;
+      return false;
+    });
+  }
+  return products.filter((product) => {
+    if (
+      tokens.includes(product.color.toLowerCase()) ||
+      tokens.includes(product.type.toLowerCase())
+    )
+      return true;
+  });
+}
+
 export default function StoreProvider({
   children,
 }: {
@@ -61,8 +104,9 @@ export default function StoreProvider({
 }) {
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-  const [filters, setFilters] = useState<Filter[]>([]);
+  const [filters, setFilters] = useState<Filter>({});
 
+  // TODO: Refactor to another function
   const filterProductsBySearch = useCallback(
     (query: string) => {
       if (!query.length) {
@@ -75,74 +119,61 @@ export default function StoreProvider({
         .split(" ")
         .map((token) => token.toLowerCase());
 
-      setFilteredProducts(() => {
-        if (tokens.length > 1) {
-          return products.filter((product) => {
-            if (
-              query.toLowerCase() === product.name.toLowerCase() ||
-              (tokens.includes(product.color.toLowerCase()) &&
-                tokens.includes(product.type.toLowerCase()))
-            )
-              return true;
-            return false;
-          });
-        }
-        return products.filter((product) => {
-          if (
-            tokens.includes(product.color.toLowerCase()) ||
-            tokens.includes(product.type.toLowerCase())
-          )
-            return true;
-        });
-      });
+      setFilteredProducts(checkProductMatchQuery(query, tokens, products));
     },
     [products]
   );
 
   const updateFilters = useCallback(
     (attribute: string, value: string, action: "add" | "remove") => {
-      setFilters((prev) => {
-        if (action === "add") return [...prev, { type: attribute, value }];
-        if (action === "remove")
-          return prev.filter((filter) => filter.value !== value);
-        return prev;
+      setFilters((filter) => {
+        if (action === "add") {
+          if (Object.keys(filter).includes(attribute)) {
+            filter[attribute].add(value);
+            return { ...filter };
+          }
+          const newFilter: Filter = {};
+          newFilter[attribute] = new Set([value]);
+          return { ...filter, ...newFilter };
+        }
+        if (action === "remove") {
+          filter[attribute]?.delete(value);
+          if (filter[attribute]?.size === 0) delete filter[attribute];
+          return { ...filter };
+        }
+        return filter;
       });
     },
     []
   );
 
+  const getProductById = useCallback(
+    (product_id: number) => {
+      const product = products.find((product) => product.id === product_id);
+      return product;
+    },
+    [products]
+  );
+
   useEffect(() => {
     getProducts().then((data) => {
       setProducts(data);
-      setFilteredProducts(data);
     });
   }, []);
 
   useEffect(() => {
-    if (!filters.length) {
+    if (!Object.keys(filters).length) {
       setFilteredProducts(products);
       return;
     }
 
-    const filtered = products.filter((product) => {
-      for (const filter of filters) {
-        const value = product[filter.type];
-        if (filter.type === "price") {
-          console.log(parseInt(filter.value));
-        } else if (
-          typeof value === "string" &&
-          value.toLowerCase() === filter.value
-        )
-          return true;
-      }
-      return false;
-    });
-    setFilteredProducts(filtered);
+    setFilteredProducts(getFilteredProducts(products, filters));
   }, [filters, products]);
 
   const value = {
     products: filteredProducts,
     filterProductsBySearch,
+    getProductById,
     updateFilters,
   };
 

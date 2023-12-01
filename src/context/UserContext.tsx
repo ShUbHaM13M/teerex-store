@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useState } from "react";
-import { Product } from "./StoreContext";
+import { Product, useStore } from "./StoreContext";
 
 type CartItem = {
   [key: number]: Product;
@@ -35,18 +35,27 @@ interface UserProviderProps {
 
 export default function UserProvider({ children }: UserProviderProps) {
   const [productsInCart, setProductsInCart] = useState<CartItem>({});
+  const { getProductById } = useStore();
 
-  const addProductToCart = useCallback((product: Product) => {
-    setProductsInCart((prev) => {
-      const _product = prev[product.id];
-      const cartItem: CartItem = {};
-      cartItem[product.id] = {
-        ...product,
-        quantity: _product ? _product.quantity + 1 : 1,
-      };
-      return { ...prev, ...cartItem };
-    });
-  }, []);
+  const addProductToCart = useCallback(
+    (product: Product) => {
+      setProductsInCart((prev) => {
+        const _product = prev[product.id];
+        const quantity = _product ? _product.quantity + 1 : 1;
+        const { quantity: storeQuantity } = getProductById(product.id)!;
+        if (storeQuantity >= quantity) {
+          const cartItem: CartItem = {};
+          cartItem[product.id] = {
+            ...product,
+            quantity,
+          };
+          return { ...prev, ...cartItem };
+        }
+        return { ...prev };
+      });
+    },
+    [getProductById]
+  );
 
   const getTotalItemsInCart = useCallback(() => {
     return Object.values(productsInCart).reduce(

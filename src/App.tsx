@@ -9,14 +9,14 @@ import UserProvider from "./context/UserContext";
 function App() {
   return (
     <Suspense fallback={<div>Mohh</div>}>
-      <UserProvider>
-        <Navbar />
-        <StoreProvider>
+      <StoreProvider>
+        <UserProvider>
+          <Navbar />
           {Object.entries(pages).map(([key, page]) => (
             <Route key={key} path={key} component={page} />
           ))}
-        </StoreProvider>
-      </UserProvider>
+        </UserProvider>
+      </StoreProvider>
     </Suspense>
   );
 }
