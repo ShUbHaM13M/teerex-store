@@ -13,7 +13,7 @@
   justify-content: space-between;
 }
 @media screen and (min-width: 767px) {
-  .header {
+  .container.cart .header {
     flex-direction: row;
     align-items: center;
   }
