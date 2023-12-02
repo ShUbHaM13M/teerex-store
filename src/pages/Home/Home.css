@@ -6,3 +6,15 @@
   grid-template-columns: repeat(auto-fit, minmax(var(--card-width), 1fr));
   place-items: center;
 }
+
+.not-found-container {
+  margin-top: 4em;
+  display: grid;
+  gap: 1em;
+  place-items: center;
+}
+@media screen and (min-width: 1240px) {
+  .not-found-container {
+    margin-top: 0;
+  }
+}
