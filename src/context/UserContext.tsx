@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useState } from "react";
 import { Product, useStore } from "./StoreContext";
+import { useNotification } from "./NotificationContext";
 
 type CartItem = {
   [key: number]: Product;
@@ -34,6 +35,7 @@ interface UserProviderProps {
 }
 
 export default function UserProvider({ children }: UserProviderProps) {
+  const { setMessage } = useNotification();
   const [productsInCart, setProductsInCart] = useState<CartItem>({});
   const { getProductById } = useStore();
 
@@ -51,6 +53,10 @@ export default function UserProvider({ children }: UserProviderProps) {
           };
           return { ...prev, ...cartItem };
         }
+        setMessage({
+          text: `Oops! You've exceeded the available stock for this item. Max quantity is ${storeQuantity}.`,
+          type: "error",
+        });
         return { ...prev };
       });
     },
