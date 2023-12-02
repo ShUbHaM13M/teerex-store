@@ -38,14 +38,15 @@ export default function Filter({ filters }: FilterProps) {
       <div className="filter-container" key={label}>
         <p className="filter-title">{label}</p>
         <div className={`filter-options ${type === "color" ? "row" : ""}`}>
-          {options.map((option) => (
+          {options.map((option, index) => (
             <div key={option} className="filter">
               <FilterComponent
+                {...props}
                 option={option}
                 label={label}
                 type={type}
+                range={props.range ? props.range[index] : null}
                 onFilterItemClick={onFilterItemClick}
-                {...props}
               />
             </div>
           ))}

@@ -19,9 +19,9 @@ export const filters: FilterType[] = [
     },
     {
         label: "Price",
-        options: ["Rs 0 - 250", "Rs 250 - 450", "Rs 450"],
+        options: ["Rs 0 - 250", "Rs 251 - 450", "Rs 450"],
         type: "range",
-        range: ["0-250", "250-450", "450"]
+        range: ["0-250", "251-450", "450"]
     },
     {
         label: "Type",

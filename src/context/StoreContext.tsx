@@ -63,9 +63,18 @@ function getFilteredProducts(products: Product[], filters: Filter) {
         match &&
         [...value].reduce((acc, v) => {
           const current = product[type];
-          if (typeof current === "string")
-            return acc || current.toLowerCase() === v;
-          return acc;
+          switch (typeof current) {
+            case "string":
+              return acc || current.toLowerCase() === v;
+            case "number":
+              let [min, max] = v.split("-");
+              if (!max) return acc || current > parseInt(min);
+              return (
+                acc || (current >= parseInt(min) && current <= parseInt(max))
+              );
+            default:
+              return acc;
+          }
         }, false);
     });
     return match;
@@ -106,7 +115,6 @@ export default function StoreProvider({
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [filters, setFilters] = useState<Filter>({});
 
-  // TODO: Refactor to another function
   const filterProductsBySearch = useCallback(
     (query: string) => {
       if (!query.length) {
