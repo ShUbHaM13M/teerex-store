@@ -16,7 +16,7 @@ const Navbar = () => {
           />
         </div>
         <h1>
-          <a href="/">TeeRex Store</a>
+          <Link href="/">TeeRex Store</Link>
         </h1>
       </div>
       <div className="nav-links">
