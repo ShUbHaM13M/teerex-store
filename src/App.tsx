@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import "./App.component.css";
-import { Navbar } from "./components";
+import { Loader, Navbar } from "./components";
 import { Route } from "wouter";
 import pages from "./pages";
 import StoreProvider from "./context/StoreContext";
@@ -8,7 +8,7 @@ import UserProvider from "./context/UserContext";
 
 function App() {
   return (
-    <Suspense fallback={<div>Mohh</div>}>
+    <Suspense fallback={<Loader />}>
       <StoreProvider>
         <UserProvider>
           <Navbar />

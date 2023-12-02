@@ -6,5 +6,16 @@ import Sidebar from "./sidebar";
 import AddToCartBtn from "./add-to-cart-btn";
 import CartItem from "./cart-item";
 import Filter from "./filter";
+import Loader from "./loader";
 
-export { Navbar, Cart, ProductCard, Searchbar, Sidebar, AddToCartBtn, CartItem, Filter }
+export {
+    Navbar,
+    Cart,
+    ProductCard,
+    Searchbar,
+    Sidebar,
+    AddToCartBtn,
+    CartItem,
+    Filter,
+    Loader,
+};
