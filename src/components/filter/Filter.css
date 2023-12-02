@@ -24,8 +24,20 @@
 
 .filter {
   display: flex;
-  gap: 1em;
+  gap: 0.5em;
   background-color: transparent;
+  align-items: center;
+}
+
+.filter input[type="checkbox"] {
+  --size: 16px;
+  width: var(--size);
+  height: var(--size);
+  accent-color: var(--accent);
+}
+.filter label {
+  user-select: none;
+  cursor: pointer;
 }
 
 .color-filter-btn {
