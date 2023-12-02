@@ -20,6 +20,35 @@ nav h1 {
   font-size: 0.8rem;
   font-weight: 700;
 }
+nav .logo-container {
+  display: flex;
+  gap: 0.4em;
+  align-items: center;
+  flex: 1;
+}
+nav .logo {
+  --size: 34px;
+  padding: 0.2em;
+  height: var(--size);
+  width: var(--size);
+  background-color: #f4eddd;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+@media screen and (min-width: 767px) {
+  nav .logo-container {
+    gap: 1em;
+  }
+  nav .logo {
+    --size: 40px;
+    padding: 0.4em;
+  }
+}
+nav .logo img {
+  height: 100%;
+}
 nav h1 a {
   font-size: inherit;
   color: inherit;

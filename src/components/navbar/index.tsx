@@ -7,9 +7,18 @@ const Navbar = () => {
 
   return (
     <nav>
-      <h1>
-        <a href="/">TeeRex Store</a>
-      </h1>
+      <div className="logo-container">
+        <div className="logo">
+          <img
+            title="TeeRex Store logo"
+            src="/favicon.png"
+            alt="TeeRex Store Logo"
+          />
+        </div>
+        <h1>
+          <a href="/">TeeRex Store</a>
+        </h1>
+      </div>
       <div className="nav-links">
         <Link
           href="/"
