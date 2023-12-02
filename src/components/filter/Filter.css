@@ -51,14 +51,11 @@
   transition-duration: 0.3s;
   transition-timing-function: ease;
 }
-
-.color-filter-btn:has(input:checked) {
-  outline: 1px solid rgba(0, 0, 0, 0.4);
-  transform: scale(0.9);
+.color-filter-btn input {
+  --size: 100% !important;
 }
 
-@media (prefers-color-scheme: dark) {
-  .color-filter-btn:has(input:checked) {
-    outline-color: rgba(255, 255, 255);
-  }
+.color-filter-btn:has(input:checked) {
+  outline: 4px solid var(--accent);
+  transform: scale(0.8);
 }
