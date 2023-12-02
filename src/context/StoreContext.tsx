@@ -115,7 +115,6 @@ export default function StoreProvider({
 }) {
   const [products, setProducts] = useState<Product[]>([]);
   const loading = !products.length;
-  console.log(loading);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [filters, setFilters] = useState<Filter>({});
 
