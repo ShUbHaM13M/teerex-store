@@ -29,6 +29,7 @@ const API_URL =
 
 interface StoreContextProps {
   products: Product[];
+  loading: boolean;
   filterProductsBySearch: (query: string) => void;
   getProductById: (product_id: number) => Product | undefined;
   updateFilters: (
@@ -40,6 +41,7 @@ interface StoreContextProps {
 
 export const StoreContext = createContext<StoreContextProps>({
   products: [],
+  loading: true,
   filterProductsBySearch: () => {},
   getProductById: () => undefined,
   updateFilters: () => {},
@@ -112,6 +114,8 @@ export default function StoreProvider({
   children: React.ReactNode;
 }) {
   const [products, setProducts] = useState<Product[]>([]);
+  const loading = !products.length;
+  console.log(loading);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [filters, setFilters] = useState<Filter>({});
 
@@ -180,6 +184,7 @@ export default function StoreProvider({
 
   const value = {
     products: filteredProducts,
+    loading,
     filterProductsBySearch,
     getProductById,
     updateFilters,
